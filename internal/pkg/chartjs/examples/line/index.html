@@ -1,0 +1,25 @@
+<html>
+    <head>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
+    </head>
+    <body>
+        <canvas id="bar-chart" style="width: 300px; height: 300px;" width="300px" height="300px"></canvas>
+        <script>
+
+// Bar chart
+new Chart(document.getElementById("bar-chart"), {
+    type: 'bar',
+    data: {"fill":false,"labels":["a","b","c","d","e"],"datasets":[{"type":"line","label":"dataset1","borderColor":"#ff0000","borderWidth":0,"lineTension":0.4,"pointBorderWidth":0,"pointRadius":0,"pointHitRadius":0,"pointHoverRadius":0,"pointHoverBorderWidth":0,"data":[2,5,7,3,4]}]},
+    options: {
+        responsive: true,
+      legend: { display: false },
+      title: {
+        display: true,
+        text: 'Predicted world population (millions) in 2050'
+      }
+    }
+});
+        </script>
+    </body>
+</html>
+
