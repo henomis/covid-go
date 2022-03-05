@@ -44,6 +44,11 @@ func (d *Data) ImportCSV(endpoint string) error {
 
 	switch endpointURL.Scheme {
 	case "http", "https":
+
+		if d.httpClient == nil {
+			return fmt.Errorf("invalid httpclient")
+		}
+
 		bodyStream, err = d.httpClient.Download(endpoint)
 		defer bodyStream.Close()
 		if err != nil {
