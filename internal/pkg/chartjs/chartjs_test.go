@@ -1,8 +1,15 @@
 package chartjs
 
-import "testing"
+import (
+	"testing"
+)
 
 func TestChartjs_String(t *testing.T) {
+
+	line := "line"
+	dataset1 := "dataset1"
+	red := "#ff0000"
+
 	type fields struct {
 		Config Config
 	}
@@ -16,20 +23,19 @@ func TestChartjs_String(t *testing.T) {
 			fields: fields{
 				Config: Config{
 					Data: Data{
-						Labels: []string{"a,b,c,d,e"},
+						Labels: []string{"a", "b", "c", "d", "e"},
 						Datasets: []Dataset{
 							{
-								Type:        "line",
-								Label:       "dataset1",
-								BorderColor: "#ff0000",
-								LineTension: 0.4,
+								Type:        &line,
+								Label:       &dataset1,
+								BorderColor: &red,
 								Data:        []int{2, 5, 7, 3, 4},
 							},
 						},
 					},
 				},
 			},
-			want: "",
+			want: "{\"data\":{\"labels\":[\"a\",\"b\",\"c\",\"d\",\"e\"],\"datasets\":[{\"type\":\"line\",\"label\":\"dataset1\",\"borderColor\":\"#ff0000\",\"data\":[2,5,7,3,4]}]}}",
 		},
 	}
 	for _, tt := range tests {

@@ -5,7 +5,7 @@ type Chartjs struct {
 }
 
 type Config struct {
-	Type    string   `json:"type,omitempty"`
+	Type    *string  `json:"type,omitempty"`
 	Data    Data     `json:"data,omitempty"`
 	Options *Options `json:"options,omitempty"`
 	Plugins *Plugins `json:"plugins,omitempty"`
@@ -17,29 +17,29 @@ type Data struct {
 }
 
 type Dataset struct {
-	Type            string  `json:"type,omitempty"`
-	Label           string  `json:"label,omitempty"`
-	BackgroundColor string  `json:"backgroundColor,omitempty"`
-	BorderColor     string  `json:"borderColor,omitempty"`
-	BorderWidth     float64 `json:"borderWidth"`
-	Fill            *bool   `json:"fill,omitempty"`
+	Type            *string  `json:"type,omitempty"`
+	Label           *string  `json:"label,omitempty"`
+	BackgroundColor *string  `json:"backgroundColor,omitempty"`
+	BorderColor     *string  `json:"borderColor,omitempty"`
+	BorderWidth     *float64 `json:"borderWidth,omitempty"`
+	Fill            *bool    `json:"fill,omitempty"`
 
-	SteppedLine            *bool   `json:"steppedLine,omitempty"`
-	LineTension            float64 `json:"lineTension"`
-	CubicInterpolationMode string  `json:"cubicInterpolationMode,omitempty"`
-	PointBackgroundColor   string  `json:"pointBackgroundColor,omitempty"`
-	PointBorderColor       string  `json:"pointBorderColor,omitempty"`
-	PointBorderWidth       float64 `json:"pointBorderWidth,omitempty"`
-	PointRadius            float64 `json:"pointRadius,omitempty"`
-	PointHitRadius         float64 `json:"pointHitRadius,omitempty"`
-	PointHoverRadius       float64 `json:"pointHoverRadius,omitempty"`
-	PointHoverBorderColor  string  `json:"pointHoverBorderColor,omitempty"`
-	PointHoverBorderWidth  float64 `json:"pointHoverBorderWidth"`
-	PointStyle             int     `json:"pointStyle,omitempty"`
+	SteppedLine            *bool    `json:"steppedLine,omitempty"`
+	LineTension            *float64 `json:"lineTension,omitempty"`
+	CubicInterpolationMode *string  `json:"cubicInterpolationMode,omitempty"`
+	PointBackgroundColor   *string  `json:"pointBackgroundColor,omitempty"`
+	PointBorderColor       *string  `json:"pointBorderColor,omitempty"`
+	PointBorderWidth       *float64 `json:"pointBorderWidth,omitempty"`
+	PointRadius            *float64 `json:"pointRadius,omitempty"`
+	PointHitRadius         *float64 `json:"pointHitRadius,omitempty"`
+	PointHoverRadius       *float64 `json:"pointHoverRadius,omitempty"`
+	PointHoverBorderColor  *string  `json:"pointHoverBorderColor,omitempty"`
+	PointHoverBorderWidth  *float64 `json:"pointHoverBorderWidth,omitempty"`
+	PointStyle             *int     `json:"pointStyle,omitempty"`
 
 	// Axis ID that matches the ID on the Axis where this dataset is to be drawn.
-	XAxisID string `json:"xAxisID,omitempty"`
-	YAxisID string `json:"yAxisID,omitempty"`
+	XAxisID *string `json:"xAxisID,omitempty"`
+	YAxisID *string `json:"yAxisID,omitempty"`
 
 	// set the formatter for the data, e.g. "%.2f"
 	// these are not exported in the json, just used to determine the decimals of precision to show
@@ -72,5 +72,15 @@ func True() *bool {
 
 func False() *bool {
 	t := false
+	return &t
+}
+
+func Float(input float64) *float64 {
+	t := input
+	return &t
+}
+
+func String(input string) *string {
+	t := input
 	return &t
 }
