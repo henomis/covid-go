@@ -103,6 +103,11 @@ func (d *Data) DatasetAsFloats(dataframeKey string, datasetKey string) []float64
 	return d.dataFrame[dataframeKey].Col(datasetKey).Float()
 }
 
+func (d *Data) DatasetAsInt(dataframeKey string, datasetKey string) []int {
+	integers, _ := d.dataFrame[dataframeKey].Col(datasetKey).Int()
+	return integers
+}
+
 func (d *Data) NewAVG7Dataset(dataframeKey, datasetKey string) []float64 {
 	p := d.dataFrame[dataframeKey].Col(datasetKey).Rolling(7).Mean()
 
@@ -125,74 +130,3 @@ func keyIsIn(key string, keys []string) bool {
 	}
 	return false
 }
-
-// func main() {
-
-// 	httpStream, err := downloadFile("https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-andamento-nazionale/dpc-covid19-ita-andamento-nazionale.csv")
-// 	if err != nil {
-// 		panic(err)
-// 	}
-
-// 	df := dataframe.ReadCSV(httpStream)
-// 	df = df.Select([]string{"data", "nuovi_positivi"})
-
-// 	removeData := func(s series.Series) series.Series {
-
-// 		if s.Name != "data" {
-// 			return s
-// 		}
-
-// 		dates := s.Records()
-// 		newDates := []string{}
-
-// 		for _, v := range dates {
-// 			newDates = append(newDates, v[0:10])
-// 		}
-// 		return series.Strings(newDates)
-// 	}
-
-// 	df = df.Capply(removeData)
-
-// 	p := df.Col("nuovi_positivi").Rolling(7).Mean()
-
-// 	nans := p.IsNaN()
-// 	for i, v := range nans {
-// 		if v {
-// 			p.Elem(i).Set(0.0)
-// 		}
-// 	}
-
-// 	np, _ := df.Col("nuovi_positivi").Int()
-
-// 	chart := charthtmlgo.New()
-// 	chart.Config.Type = "line"
-// 	chart.Config.Data.Labels = df.Col("data").Records()
-// 	chart.Config.Data.Datasets = append(
-// 		chart.Config.Data.Datasets,
-// 		charthtmlgo.Dataset{
-// 			Label:                "dataset1",
-// 			FillColor:            "rgba(151,187,205,0.2)",
-// 			StrokeColor:          "rgba(151,187,205,1)",
-// 			PointColor:           "rgba(151,187,205,1)",
-// 			PointStrokeColor:     "#fff",
-// 			PointHighlightFill:   "#fff",
-// 			PointHighlightStroke: "rgba(151,187,205,1)",
-// 			Data:                 np,
-// 		})
-// 	chart.Config.Data.Datasets = append(
-// 		chart.Config.Data.Datasets,
-// 		charthtmlgo.Dataset{
-// 			Label:                "dataset2",
-// 			FillColor:            "",
-// 			StrokeColor:          "rgba(245, 15, 15, 0.5)",
-// 			PointColor:           "rgba(245, 15, 15, 0.5)",
-// 			PointStrokeColor:     "#fff",
-// 			PointHighlightFill:   "#fff",
-// 			PointHighlightStroke: "rgba(220,220,220,1)",
-
-// 			Data: p.Float(),
-// 		})
-
-// 	fmt.Println(chart)
-
-// }
