@@ -48,7 +48,6 @@ func main() {
 	chart.Config.Data.Datasets = append(
 		chart.Config.Data.Datasets,
 		chartjs.Dataset{
-			Type:        chartjs.String("scatter"),
 			Label:       chartjs.String("positivi"),
 			BorderColor: chartjs.String("#0000ff"),
 			Fill:        chartjs.False(),
