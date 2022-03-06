@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/henomis/covid-go/internal/pkg/chartjs"
 	"github.com/henomis/covid-go/internal/pkg/data"
+	"github.com/henomis/covid-go/internal/pkg/graph"
 	"github.com/henomis/covid-go/internal/pkg/httpclient"
 )
 
@@ -32,44 +32,20 @@ func main() {
 	avg7 := dataSet.NewAVG7Dataset(data.ImportedCSVDataframeKey, "nuovi_positivi")
 	//fmt.Println(avg7)
 
-	chart := chartjs.New()
-	chart.Config.Data.Labels = dataSet.DatasetAsStrings(data.ImportedCSVDataframeKey, "data")
-	chart.Config.Type = chartjs.String("line")
-	chart.Config.Data.Datasets = append(
-		chart.Config.Data.Datasets,
-		chartjs.Dataset{
-			Label:       chartjs.String("positivi-avg7"),
-			BorderColor: chartjs.String("#ff00ff"),
-			Fill:        chartjs.False(),
-			PointRadius: chartjs.Float(0.0),
-			LineTension: chartjs.Float(0.4),
-			Data:        avg7,
-		})
-	chart.Config.Data.Datasets = append(
-		chart.Config.Data.Datasets,
-		chartjs.Dataset{
-			Label:       chartjs.String("positivi"),
-			BorderColor: chartjs.String("#0000ff"),
-			Fill:        chartjs.False(),
-			BorderWidth: chartjs.Float(0.0),
+	graph1 := graph.New()
+	value := graph1.NewScatteredLineGraph(
+		dataSet.DatasetAsStrings(data.ImportedCSVDataframeKey, "data"),
+		&graph.LineOptions{
+			Label:   "positivi AVG7",
+			Color:   "#ff0000",
+			Dataset: avg7,
+		},
+		&graph.ScatterOptions{
+			Label:   "positivi",
+			Color:   "rgba(196,196,196,0.44)",
+			Dataset: dataSet.DatasetAsFloats(data.ImportedCSVDataframeKey, "nuovi_positivi"),
+		},
+	)
 
-			PointRadius: chartjs.Float(3.0),
-			LineTension: chartjs.Float(0.4),
-			Data:        dataSet.DatasetAsFloats(data.ImportedCSVDataframeKey, "nuovi_positivi"),
-		})
-	// chart.Config.Data.Datasets = append(
-	// 	chart.Config.Data.Datasets,
-	// 	charthtmlgo.Dataset{
-	// 		Label:                "dataset2",
-	// 		FillColor:            "",
-	// 		StrokeColor:          "rgba(245, 15, 15, 0.5)",
-	// 		PointColor:           "rgba(245, 15, 15, 0.5)",
-	// 		PointStrokeColor:     "#fff",
-	// 		PointHighlightFill:   "#fff",
-	// 		PointHighlightStroke: "rgba(220,220,220,1)",
-
-	// 		Data: p.Float(),
-	// 	})
-
-	fmt.Println(chart)
+	fmt.Println(value)
 }

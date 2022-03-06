@@ -36,6 +36,8 @@ type Dataset struct {
 	PointHoverBorderColor  *string  `json:"pointHoverBorderColor,omitempty"`
 	PointHoverBorderWidth  *float64 `json:"pointHoverBorderWidth,omitempty"`
 	PointStyle             *int     `json:"pointStyle,omitempty"`
+	ShowLine               *bool    `json:"showLine,omitempty"`
+	Order                  *int64   `json:"order,omitempty"`
 
 	// Axis ID that matches the ID on the Axis where this dataset is to be drawn.
 	XAxisID *string `json:"xAxisID,omitempty"`
@@ -76,6 +78,11 @@ func False() *bool {
 }
 
 func Float(input float64) *float64 {
+	t := input
+	return &t
+}
+
+func Int(input int64) *int64 {
 	t := input
 	return &t
 }
