@@ -2,7 +2,8 @@ name: generate
 
 on:
   schedule:
-    - cron: '9 14 * * *'    
+    - cron: '13 14 * * *' 
+    - cron: '13 15 * * *' 
 
 jobs:
    build:
