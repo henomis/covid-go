@@ -1,8 +1,10 @@
 name: generate
 
 on:
-  schedule:
-    - cron: '23 * * * *'     
+  push:
+    branches:
+      - 'main'
+  pull_request:   
 
 jobs:
    build:
