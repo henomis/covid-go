@@ -19,11 +19,12 @@ jobs:
       run: go get -v -t -d ./...
     - name: Run app
       run: go run cmd/main.go
+    - uses: actions/checkout@v2
     - name: Git push
       run: |
         git config --global user.name 'Github Actions'
         git config --global user.email 'github-actions@noreply.github.com'
-        git rm -fr data
-        git add data
+        git rm -fr ./data/
+        git add data/*
         git commit -am "Automated build"
         git push
