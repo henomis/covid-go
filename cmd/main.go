@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"io/ioutil"
+	"os"
 	"time"
 
 	"github.com/henomis/covid-go/internal/pkg/chartjs"
@@ -44,6 +46,9 @@ func main() {
 			Dataset: dataSet.DatasetAsFloats(data.ImportedCSVDataframeKey, "nuovi_positivi"),
 		},
 	)
+
+	os.Mkdir("data", 0776)
+	ioutil.WriteFile("./data/italia.json", []byte(value), 0666)
 
 	fmt.Println(value)
 }

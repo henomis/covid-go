@@ -2,7 +2,11 @@ name: generate
 
 on:
   schedule:
-    - cron: '00 17 * * *'     
+    - cron: '30 16 * * *'
+  push:
+    branches:
+      - 'main'
+  pull_request:  
 
 jobs:
    build:
@@ -15,3 +19,11 @@ jobs:
       run: go get -v -t -d ./...
     - name: Run app
       run: go run cmd/main.go
+    - name: Git push
+      run: |
+        git config --global user.name 'Github Actions'
+        git config --global user.email 'github-actions@noreply.github.com'
+        git rm -fr data
+        git add data
+        git commit -am "Automated build"
+        git push
