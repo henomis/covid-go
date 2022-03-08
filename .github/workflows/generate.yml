@@ -25,6 +25,5 @@ jobs:
         git config --global user.name 'Github Actions'
         git config --global user.email 'github-actions@noreply.github.com'
         git rm -fr ./data/
-        git add data/*
         git commit -am "Automated build"
         git push
