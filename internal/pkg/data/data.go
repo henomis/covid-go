@@ -67,6 +67,18 @@ func (d *Data) Select(dataframeKey string, selectIndexes SelectIndexes) {
 	d.dataFrame[dataframeKey] = d.dataFrame[dataframeKey].Select(selectIndexes)
 }
 
+func (d *Data) SelectAndCopy(dataframeKeySource, dataframeKeyDestination string, selectIndexes SelectIndexes) {
+	d.dataFrame[dataframeKeyDestination] = d.dataFrame[dataframeKeySource].Select(selectIndexes)
+}
+
+func (d *Data) Copy(dataframeKeySource, dataframeKeyDestination string) {
+	d.dataFrame[dataframeKeyDestination] = d.dataFrame[dataframeKeySource]
+}
+
+func (d *Data) Delete(dataframeKey string) {
+	delete(d.dataFrame, dataframeKey)
+}
+
 func (d *Data) String() string {
 
 	output := ""

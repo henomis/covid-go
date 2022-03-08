@@ -3,10 +3,6 @@ name: generate
 on:
   schedule:
     - cron: '30 16 * * *'
-  push:
-    branches:
-      - 'main'
-  pull_request:  
 
 jobs:
    build:
