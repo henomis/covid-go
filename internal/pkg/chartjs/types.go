@@ -91,3 +91,15 @@ func String(input string) *string {
 	t := input
 	return &t
 }
+
+type LineOptions struct {
+	Dataset interface{}
+	Label   string
+	Color   string
+}
+
+type ScatterOptions struct {
+	Dataset interface{}
+	Label   string
+	Color   string
+}
