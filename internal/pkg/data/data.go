@@ -79,15 +79,9 @@ func (d *Data) Delete(dataframeKey string) {
 	delete(d.dataFrame, dataframeKey)
 }
 
-func (d *Data) String() string {
+func (d *Data) Print(dataframeKey string) string {
 
-	output := ""
-
-	for name, dataframe := range d.dataFrame {
-		output += fmt.Sprintf("Key: '%s'\n%s", name, dataframe.String())
-	}
-
-	return output
+	return d.dataFrame[dataframeKey].String()
 }
 
 func (d *Data) ColReplaceString(dataframeKey string, columnNames []string, replaceFunc func(input string) string) {
@@ -132,6 +126,10 @@ func (d *Data) NewAVG7Dataset(dataframeKey, datasetKey string) []float64 {
 
 	return p.Float()
 
+}
+
+func (d *Data) GroupAndSum(dataframeKeySource, dataframeKeyDestination, groupingColumnName, summingColumnName string) {
+	d.dataFrame[dataframeKeyDestination] = d.dataFrame[dataframeKeySource].GroupBy(groupingColumnName).Aggregation([]dataframe.AggregationType{dataframe.Aggregation_SUM}, []string{summingColumnName})
 }
 
 func keyIsIn(key string, keys []string) bool {
