@@ -67,15 +67,21 @@ func (d *Data) Select(dataframeKey string, selectIndexes SelectIndexes) {
 	d.dataFrame[dataframeKey] = d.dataFrame[dataframeKey].Select(selectIndexes)
 }
 
-func (d *Data) String() string {
+func (d *Data) SelectAndCopy(dataframeKeySource, dataframeKeyDestination string, selectIndexes SelectIndexes) {
+	d.dataFrame[dataframeKeyDestination] = d.dataFrame[dataframeKeySource].Select(selectIndexes)
+}
 
-	output := ""
+func (d *Data) Copy(dataframeKeySource, dataframeKeyDestination string) {
+	d.dataFrame[dataframeKeyDestination] = d.dataFrame[dataframeKeySource]
+}
 
-	for name, dataframe := range d.dataFrame {
-		output += fmt.Sprintf("Key: '%s'\n%s", name, dataframe.String())
-	}
+func (d *Data) Delete(dataframeKey string) {
+	delete(d.dataFrame, dataframeKey)
+}
 
-	return output
+func (d *Data) Print(dataframeKey string) string {
+
+	return d.dataFrame[dataframeKey].String()
 }
 
 func (d *Data) ColReplaceString(dataframeKey string, columnNames []string, replaceFunc func(input string) string) {
@@ -120,6 +126,10 @@ func (d *Data) NewAVG7Dataset(dataframeKey, datasetKey string) []float64 {
 
 	return p.Float()
 
+}
+
+func (d *Data) GroupAndSum(dataframeKeySource, dataframeKeyDestination, groupingColumnName, summingColumnName string) {
+	d.dataFrame[dataframeKeyDestination] = d.dataFrame[dataframeKeySource].GroupBy(groupingColumnName).Aggregation([]dataframe.AggregationType{dataframe.Aggregation_SUM}, []string{summingColumnName})
 }
 
 func keyIsIn(key string, keys []string) bool {
