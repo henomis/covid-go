@@ -6,19 +6,33 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.6.0/Chart.min.js"></script>
 </head>
 <body>
-<canvas id="canvas" style="width:100%;max-height:700px"></canvas>
+
+<label for="country">Regione:</label>
+
+<select name="country" id="country" onChange="onSelectChange()">
+  <option value="italia">Italia</option>
+  <option value="marche">Marche</option>
+</select>
+
+<canvas id="canvas" height="700px" style="width:100%;max-height:700px"></canvas>
 
 
 <script>
 
-fetch("data.json")
+const onSelectChange = () =>{
+	getData(document.getElementById("country").value + ".json")
+}
+
+const getData = (dataFile) => {
+fetch(dataFile)
  .then(response => response.text())
     .then(data => {
 	var ctx = canvas.getContext('2d');
 	var chart = new Chart(ctx, JSON.parse(data));
     })
+}
 
 
-
+getData("italia.json")
 </script>
 </body></html>
