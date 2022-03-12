@@ -21,6 +21,9 @@ func (c *Chartjs) NewScatteredLineGraph(labels []string, lineOptions *LineOption
 
 	c.Config.Data.Labels = labels
 	c.Config.Type = String("line")
+	c.Config.Options = &Options{
+		MaintainAspectRatio: False(),
+	}
 	c.Config.Data.Datasets = append(
 		c.Config.Data.Datasets,
 		Dataset{
