@@ -101,6 +101,36 @@ func (d *Data) ColReplaceString(dataframeKey string, columnNames []string, repla
 	})
 }
 
+func (d *Data) ColReplaceFloat(dataframeKey string, columnNames []string, replaceFunc func(index int, input float64) float64) {
+
+	d.dataFrame[dataframeKey] = d.dataFrame[dataframeKey].Capply(func(s series.Series) series.Series {
+		if !keyIsIn(s.Name, columnNames) {
+			return s
+		}
+
+		newRecords := []float64{}
+
+		for i, v := range s.Float() {
+			newRecords = append(newRecords, replaceFunc(i, v))
+		}
+
+		return series.Floats(newRecords)
+	})
+}
+
+func (d *Data) ColCalculateFloat(dataframeKey string, columnNames []string, replaceFunc func(records []float64) []float64) {
+
+	d.dataFrame[dataframeKey] = d.dataFrame[dataframeKey].Capply(func(s series.Series) series.Series {
+		if !keyIsIn(s.Name, columnNames) {
+			return s
+		}
+
+		newRecords := replaceFunc(s.Float())
+
+		return series.Floats(newRecords)
+	})
+}
+
 func (d *Data) DatasetAsStrings(dataframeKey string, datasetKey string) []string {
 	return d.dataFrame[dataframeKey].Col(datasetKey).Records()
 }
